@@ -1553,4 +1553,4 @@ function hashCode (s) {
     return hash;
 };
 
-};
+});
