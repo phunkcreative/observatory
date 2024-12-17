@@ -36,9 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Simulation section
     
-    const canvas = document.getElementsByTagName('canvas')[0];
-    resizeCanvas();
-    
     let config = {
         SIM_RESOLUTION: 256,
         DYE_RESOLUTION: 1024,
