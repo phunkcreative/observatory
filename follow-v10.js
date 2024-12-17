@@ -59,23 +59,6 @@ const canvas = document.getElementsByTagName('canvas')[0];
         SUNRAYS_WEIGHT: 1.0,
     }
 
-    let pointers = [];
-    let splatStack = [];
-    pointers.push(new pointerPrototype());
-
-    let gl, ext;
-    initializeWebGLContext();
-
-    if (isMobile()) {
-        config.DYE_RESOLUTION = 512;
-    }
-    if (!ext.supportLinearFiltering) {
-        config.DYE_RESOLUTION = 512;
-        config.SHADING = false;
-        config.BLOOM = false;
-        config.SUNRAYS = false;
-    }
-
     // clean up start
 
     function cleanupWebGLContext() {
