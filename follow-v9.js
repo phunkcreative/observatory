@@ -29,9 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Simulation section
 
 const canvas = document.getElementsByTagName('canvas')[0];
-resizeCanvas();
-
-const canvas = document.getElementsByTagName('canvas')[0];
     resizeCanvas();
 
     let config = {
