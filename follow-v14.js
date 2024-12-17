@@ -122,10 +122,6 @@ function pointerPrototype () {
     this.color = [30, 0, 300];
 }
 
-let pointers = [];
-let splatStack = [];
-pointers.push(new pointerPrototype());
-
 const { gl, ext } = getWebGLContext(canvas);
 
 if (isMobile()) {
