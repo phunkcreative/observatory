@@ -96,7 +96,6 @@ const canvas = document.getElementsByTagName('canvas')[0];
     let splatStack = [];
     pointers.push(new pointerPrototype());
 
-    let gl, ext;
     initializeWebGLContext();
 
     if (isMobile()) {
