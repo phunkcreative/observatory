@@ -1354,6 +1354,11 @@ function createTextureAsync(url) {
         return radius;
     }
     
+document.addEventListener('DOMContentLoaded', () => {
+    if (!pointers) {
+        pointers = [];
+    }
+
     canvas.addEventListener('mousedown', e => {
         let posX = scaleByPixelRatio(e.offsetX);
         let posY = scaleByPixelRatio(e.offsetY);
@@ -1362,7 +1367,7 @@ function createTextureAsync(url) {
             pointer = new pointerPrototype();
         updatePointerDownData(pointer, -1, posX, posY);
     });
-    
+
     canvas.addEventListener('mousemove', e => {
         let posX = scaleByPixelRatio(e.offsetX);
         let posY = scaleByPixelRatio(e.offsetY);
@@ -1371,7 +1376,7 @@ function createTextureAsync(url) {
             pointer = new pointerPrototype();
         updatePointerMoveData(pointer, posX, posY);
     });
-    
+
     canvas.addEventListener('touchmove', e => {
         e.preventDefault();
         const touches = e.targetTouches;
@@ -1383,7 +1388,7 @@ function createTextureAsync(url) {
             updatePointerMoveData(pointers[i + 1], posX, posY);
         }
     }, false);
-    
+
     window.addEventListener('touchend', e => {
         const touches = e.changedTouches;
         for (let i = 0; i < touches.length; i++)
@@ -1393,6 +1398,7 @@ function createTextureAsync(url) {
             updatePointerUpData(pointer);
         }
     });
+});
     
     function updatePointerDownData (pointer, id, posX, posY) {
         pointer.id = id;
