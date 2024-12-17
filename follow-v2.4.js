@@ -80,9 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let pointers = [];
     let splatStack = [];
     pointers.push(new pointerPrototype());
-    
-    const { gl, ext } = getWebGLContext(canvas);
-    
+        
     if (isMobile()) {
         config.DYE_RESOLUTION = 512;
     }
