@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+window.onload = function() { 
+
 'use strict';
 
 // Simulation section
@@ -1494,4 +1496,6 @@ function hashCode (s) {
         hash |= 0; // Convert to 32bit integer
     }
     return hash;
+};
+
 };
