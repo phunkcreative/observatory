@@ -22,6 +22,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+let gl, ext;
+
+function cleanupWebGLContext() {
+    if (gl) {
+        const numTextures = gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+        for (let i = 0; i < numTextures; i++) {
+            gl.activeTexture(gl.TEXTURE0 + i);
+            gl.bindTexture(gl.TEXTURE_2D, null);
+            gl.bindTexture(gl.TEXTURE_CUBE_MAP, null);
+        }
+        gl.bindBuffer(gl.ARRAY_BUFFER, null);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.bindRenderbuffer(gl.RENDERBUFFER, null);
+        gl.useProgram(null);
+        gl.deleteFramebuffer(dye.fbo);
+        gl.deleteFramebuffer(velocity.fbo);
+        gl.deleteFramebuffer(divergence.fbo);
+        gl.deleteFramebuffer(curl.fbo);
+        gl.deleteFramebuffer(pressure.fbo);
+        gl.deleteFramebuffer(bloom.fbo);
+        gl.deleteFramebuffer(sunrays.fbo);
+        gl.deleteFramebuffer(sunraysTemp.fbo);
+    }
+}
+
+function initializeWebGLContext() {
+    cleanupWebGLContext();
+    const context = getWebGLContext(canvas);
+    gl = context.gl;
+    ext = context.ext;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 
 'use strict';
@@ -59,41 +92,23 @@ const canvas = document.getElementsByTagName('canvas')[0];
         SUNRAYS_WEIGHT: 1.0,
     }
 
-    // clean up start
+    let pointers = [];
+    let splatStack = [];
+    pointers.push(new pointerPrototype());
 
-    function cleanupWebGLContext() {
-    if (gl) {
-        const numTextures = gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-        for (let i = 0; i < numTextures; i++) {
-            gl.activeTexture(gl.TEXTURE0 + i);
-            gl.bindTexture(gl.TEXTURE_2D, null);
-            gl.bindTexture(gl.TEXTURE_CUBE_MAP, null);
-        }
-        gl.bindBuffer(gl.ARRAY_BUFFER, null);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-        gl.bindRenderbuffer(gl.RENDERBUFFER, null);
-        gl.useProgram(null);
-        gl.deleteFramebuffer(dye.fbo);
-        gl.deleteFramebuffer(velocity.fbo);
-        gl.deleteFramebuffer(divergence.fbo);
-        gl.deleteFramebuffer(curl.fbo);
-        gl.deleteFramebuffer(pressure.fbo);
-        gl.deleteFramebuffer(bloom.fbo);
-        gl.deleteFramebuffer(sunrays.fbo);
-        gl.deleteFramebuffer(sunraysTemp.fbo);
+    let gl, ext;
+    initializeWebGLContext();
+
+    if (isMobile()) {
+        config.DYE_RESOLUTION = 512;
     }
-}
+    if (!ext.supportLinearFiltering) {
+        config.DYE_RESOLUTION = 512;
+        config.SHADING = false;
+        config.BLOOM = false;
+        config.SUNRAYS = false;
+    }
 
-function initializeWebGLContext() {
-    cleanupWebGLContext();
-    const context = getWebGLContext(canvas);
-    gl = context.gl;
-    ext = context.ext;
-}
-
-
-// clean up end. 
 
 function pointerPrototype () {
     this.id = -1;
