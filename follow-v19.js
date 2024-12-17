@@ -23,6 +23,8 @@ SOFTWARE.
 */
 
 let gl, ext;
+const canvas = document.getElementsByTagName('canvas')[0];
+
 
 function getWebGLContext(canvas) {
     const params = { alpha: true, depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false };
@@ -105,8 +107,7 @@ function initializeWebGLContext() {
 document.addEventListener('DOMContentLoaded', function() {
     'use strict';
 
-    const canvas = document.getElementsByTagName('canvas')[0];
-    resizeCanvas();
+   resizeCanvas();
 
     let config = {
         SIM_RESOLUTION: 256,
